@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intramuros INAH 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="logo_inah-removebg-preview.png" type="image/png">
+    <style>
+        :root {
+            --primary: #00873D;    /* Verde deportivo */
+            --secondary: #2C5530;  /* Verde oscuro */
+            --accent: #ff0000;     /* Dorado */
+            --background: #F0F4F0; /* Verde muy claro */
+            --text: #333333;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: var(--white);
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Carrusel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            margin: 1rem 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 16/9;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--white);
+            padding: 1rem;
+            cursor: pointer;
+            border: none;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control:hover {
+            background: var(--primary);
+        }
+
+        .carousel-prev { left: 0; border-radius: 0 5px 5px 0; }
+        .carousel-next { right: 0; border-radius: 5px 0 0 5px; }
+
+        /* Tabla */
+        .standings {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .standings h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .standings table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .standings th, .standings td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .standings th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .standings tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Desarrollador */
+        .developer {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .developer-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+        }
+
+        .developer-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .social-links {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            color: var(--white);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .social-link i {
+            margin-right: 8px;
+        }
+
+        .instagram { background: #E1306C; }
+        .facebook { background: #1877F2; }
+        .whatsapp { background: #25D366; }
+
+        /* Empresas */
+        .sponsors {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsors h2 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .sponsor-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: var(--background);
+            transition: transform 0.3s ease;
+        }
+
+        .sponsor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .sponsor-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .sponsor-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sponsor-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .sponsor-link {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .sponsor-link:hover {
+            opacity: 0.9;
+        }
+
+        .website { background: var(--secondary); }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sponsors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tournament-bracket {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tournament-bracket img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Tabla simplificada */
+        .standings {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .standings table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .standings th, .standings td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .standings th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .standings td {
+            font-size: 0.95rem;
+        }
+
+        .standings tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .standings td:nth-child(2) {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* Mejoras para vista móvil tipo app */
+        @media (max-width: 768px) {
+            body {
+                background: var(--background);
+            }
+
+            .header {
+                
+                top: 0;
+                z-index: 100;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .carousel {
+                margin: 0.5rem 0;
+                border-radius: 20px;
+            }
+
+            .tournament-bracket,
+            .standings,
+            .developer,
+            .sponsors {
+                border-radius: 20px;
+                margin: 1rem 0;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .standings {
+                padding: 1rem 0.5rem;
+            }
+
+            .standings table {
+                font-size: 0.9rem;
+            }
+
+            .standings th,
+            .standings td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            /* Hacer que la tabla sea scrolleable horizontalmente en móvil */
+            .standings {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                position: relative;
+            }
+
+            .standings::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .standings::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 2px;
+            }
+
+            .standings::-webkit-scrollbar-thumb {
+                background: var(--primary);
+                border-radius: 2px;
+            }
+
+            /* Animaciones táctiles */
+            .tournament-bracket:active,
+            .standings tr:active,
+            .social-link:active,
+            .sponsor-card:active {
+                transform: scale(0.98);
+            }
+        }
+        .match-schedule {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    </style>
+</head>
+<body>
+        <header class="header">
+        <div class="logo">
+            <img src="logo_inah-removebg-preview.png" alt="Logo Institución">
+        </div>
+       <center> <h1>Intramuros de Fúbol Sala INAH 2025</h1> </center>
+    </header>
+
+    <div class="container">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="5.png" alt="Imagen 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="2.png" alt="Imagen 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 6">
+                </div>
+            </div>
+            <button class="carousel-control carousel-prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-control carousel-next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        </section>
+        <section class="standings">
+            <h2>Partidos -  Jornada 1</h2>
+        </section>
+
+        <section class="standings">
+            <center><p>Martes 25 de Febrero</p> </center>
+            <div class="tournament-bracket">
+                <img src="2.png" alt="Cuadro del Torneo">
+            </div>
+        </section>
+           
+        <section class="standings">
+            <center><p>Miercoles 26 de Febrero</p> </center>
+            <div class="tournament-bracket">
+                <img src="3.png" alt="Cuadro del Torneo">
+            </div>
+        </section>
+
+        <section class="standings">
+            <center><p>Jueves 27 de Febrero</p> </center>
+            <div class="tournament-bracket">
+                <img src="4.png" alt="Cuadro del Torneo">
+            </div>
+        </section>
+
+        
+         <!-- Imagen de clasificaciones -->
+        <section class="standings">
+            <h2>Gráfica del Torneo</h2>
+            <div class="tournament-bracket">
+                <img src="1.png" alt="Cuadro del Torneo">
+            </div>
+        </section>
+
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 1">
+                </div>
+                <div class="carousel-item">
+                    <img src=5.png" alt="Imagen 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="MASTER STUDIO.png" alt="Imagen 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="3.png" alt="Imagen 6">
+                </div>
+            </div>
+            <button class="carousel-control carousel-prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-control carousel-next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+
+        <!-- Empresas colaboradoras -->
+        <section class="sponsors">
+            <h2>Equipo de Desarollo</h2>
+            <div class="sponsors-grid">
+                <div class="sponsor-card">
+                    <div class="sponsor-logo">
+                        <img src="marvin.jpg" alt="Logo Empresa 1">
+                    </div>
+                    <h3>Marvin Hurtado</h3>
+                    <div class="sponsor-links">
+                        <a href="https://www.instagram.com/marvins__h/profilecard/?igsh=YWIza3Qyam1pcHpi" class="sponsor-link instagram">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                        <a href="https://www.facebook.com/share/1643dnzXcA/" class="social-link facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                    </div>
+                </div>
+                <!-- Más empresas aquí -->
+                <div class="sponsor-card">
+                    <div class="sponsor-logo">
+                        <img src="MASTER STUDIO.png" alt="Logo Empresa 1">
+                    </div>
+                    <h3>Master Studio</h3>
+                    <div class="sponsor-links">
+                        <a href="https://www.instagram.com/master_studio_sv?igsh=MWdiOWEycDJqYmF4Mw==" class="sponsor-link instagram">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                        
+                    </div>
+            </div>
+            
+        </section>
+    </div>
+
+    <script>
+        // Script para manejar los carruseles
+document.querySelectorAll('.carousel').forEach((carouselElement) => {
+    const carouselInner = carouselElement.querySelector('.carousel-inner');
+    const items = carouselElement.querySelectorAll('.carousel-item');
+    const prevBtn = carouselElement.querySelector('.carousel-prev');
+    const nextBtn = carouselElement.querySelector('.carousel-next');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    });
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    }, 5000);
+});
+
+        // Script del carrusel se mantiene igual
+        const carousel = document.querySelector('.carousel-inner');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        });
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        }, 5000);
+    </script>
+    </div>
+
+    <p style="text-align: center; margin-top: 2rem;">&copy; Instituto Nacional Alejandro de Humboldt. Todos los derechos reservados.</p>
+</footer>
+</body>
+</html>
