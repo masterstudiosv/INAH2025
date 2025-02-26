@@ -3,107 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intramuros INAH 2025</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Intramuros Institucionales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="logo_inah-removebg-preview.png" type="image/png">
     <style>
         :root {
-            --primary: #00873D;    /* Verde deportivo */
-            --secondary: #2C5530;  /* Verde oscuro */
-            --accent: #ff0000;     /* Dorado */
-            --background: #F0F4F0; /* Verde muy claro */
-            --text: #333333;
-            --white: #FFFFFF;
+            --primary-color: #009625;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #000000;
+            --text-color: #000000;
+            --text-light: #f8f9fa;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background);
-            color: var(--text);
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: var(--white);
-            border-radius: 50%;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8f9fa;
+            overflow-x: hidden;
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0 15px;
         }
 
-        /* Carrusel */
-        .carousel {
-            position: relative;
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 0;
+            position: fixed;
             width: 100%;
-            margin: 1rem 0;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            aspect-ratio: 16/9;
-        }
-
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-
-        .carousel-item {
-            min-width: 100%;
-            height: 100%;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--white);
-            padding: 1rem;
-            cursor: pointer;
-            border: none;
-            z-index: 2;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
 
-        .carousel-control:hover {
-            background: var(--primary);
+        header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(35, 168, 63, 0.95);
         }
 
-        .carousel-prev { left: 0; border-radius: 0 5px 5px 0; }
-        .carousel-next { right: 0; border-radius: 5px 0 0 5px; }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* Tabla */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover:before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 90px;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: url('estadio.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-accent {
+            background: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+            background: #c0392b;
+        }
         .standings {
             background: var(--white);
             border-radius: 15px;
@@ -142,150 +226,126 @@
             background-color: #f8f9fa;
         }
 
-        /* Desarrollador */
-        .developer {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
         }
 
-        .developer-photo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 1rem;
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 3px;
+            background: var(--accent-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title p {
+            color: #777;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Historia Section */
+        .history-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .history-img {
+            position: relative;
+            height: 400px;
             overflow: hidden;
-            border: 3px solid var(--accent);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .developer-photo img {
+        .history-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .social-links {
-            margin: 1.5rem 0;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
+        .history-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
         }
 
-        .social-link {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            color: var(--white);
-            text-decoration: none;
-            transition: transform 0.3s ease;
+        .history-text p {
+            margin-bottom: 15px;
         }
 
-        .social-link:hover {
-            transform: translateY(-3px);
+       
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .history-content,
+            .culture-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .place-card {
+                flex: 0 0 calc(50% - 30px);
+            }
         }
-
-        .social-link i {
-            margin-right: 8px;
-        }
-
-        .instagram { background: #E1306C; }
-        .facebook { background: #1877F2; }
-        .whatsapp { background: #25D366; }
-
-        /* Empresas */
-        .sponsors {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .sponsors h2 {
-            color: var(--primary);
-            margin-bottom: 2rem;
-        }
-
-        .sponsors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .sponsor-card {
-            padding: 1.5rem;
-            border-radius: 10px;
-            background: var(--background);
-            transition: transform 0.3s ease;
-        }
-
-        .sponsor-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .sponsor-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1rem;
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1rem;
-        }
-
-        .sponsor-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .sponsor-links {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .sponsor-link {
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            color: var(--white);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: opacity 0.3s ease;
-        }
-
-        .sponsor-link:hover {
-            opacity: 0.9;
-        }
-
-        .website { background: var(--secondary); }
 
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
+            .nav-toggle {
+                display: block;
             }
 
-            .logo {
-                margin-bottom: 1rem;
-            }
-
-            .container {
-                padding: 0.5rem;
-            }
-
-            .social-links {
+            nav ul {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 90px);
+                background-color: var(--primary-color);
                 flex-direction: column;
                 align-items: center;
+                padding-top: 40px;
+                transition: all 0.3s ease;
+                z-index: 999;
             }
 
-            .sponsors-grid {
-                grid-template-columns: 1fr;
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .place-card {
+                flex: 0 0 100%;
+            }
+
+            section {
+                padding: 60px 0;
             }
         }
         .tournament-bracket {
@@ -304,7 +364,23 @@
             border-radius: 10px;
         }
 
-        /* Tabla simplificada */
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
         .standings {
             background: var(--white);
             border-radius: 15px;
@@ -344,104 +420,115 @@
             text-align: left;
             font-weight: 500;
         }
-
-        /* Mejoras para vista móvil tipo app */
-        @media (max-width: 768px) {
-            body {
-                background: var(--background);
-            }
-
-            .header {
-                
-                top: 0;
-                z-index: 100;
-                border-radius: 0 0 20px 20px;
-            }
-
-            .container {
-                padding: 0.5rem;
-            }
-
-            .carousel {
-                margin: 0.5rem 0;
-                border-radius: 20px;
-            }
-
-            .tournament-bracket,
-            .standings,
-            .developer,
-            .sponsors {
-                border-radius: 20px;
-                margin: 1rem 0;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            }
-
-            .standings {
-                padding: 1rem 0.5rem;
-            }
-
-            .standings table {
-                font-size: 0.9rem;
-            }
-
-            .standings th,
-            .standings td {
-                padding: 0.75rem 0.5rem;
-            }
-
-            /* Hacer que la tabla sea scrolleable horizontalmente en móvil */
-            .standings {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                position: relative;
-            }
-
-            .standings::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .standings::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 2px;
-            }
-
-            .standings::-webkit-scrollbar-thumb {
-                background: var(--primary);
-                border-radius: 2px;
-            }
-
-            /* Animaciones táctiles */
-            .tournament-bracket:active,
-            .standings tr:active,
-            .social-link:active,
-            .sponsor-card:active {
-                transform: scale(0.98);
-            }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
-        .match-schedule {
-    margin: 2rem 0;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
 
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border: 5px solid white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modal-prev,
+        .modal-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .modal-prev:hover,
+        .modal-next:hover {
+            color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
-        <header class="header">
-        <div class="logo">
-            <img src="logo_inah-removebg-preview.png" alt="Logo Institución">
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo_inah-removebg-preview.png" alt="Logo Institucional">
+                <h1>  Intramuros   INAH  2025 </h1>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#Jornadas">Jornada - 1</a></li>
+                    <li><a href="#GM">Gráfica del Torneo Masculino</a></li>
+                    <li><a href="#GF">Gráfica del Torneo Femenina</a></li>
+                </ul>
+            </nav>
         </div>
-       <center> <h1>Intramuros de Fútbol Sala INAH 2025</h1> </center>
     </header>
 
-    <div class="container">
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h2>"El fútbol es pasión que une corazones y supera límites."</h2>
+            <p>Sitio Oficial de intramuros INAH 2025</p>
+            
+        </div>
+    </section>
+
+        <div id="Jornadas">
+        <div class="container">
         </section>
         <section class="standings">
             <h2>Partidos -  Jornada 1</h2>
         </section>
-
+    
         <section class="standings">
             <center><p>Martes 25 de Febrero</p> </center>
             <div class="tournament-bracket">
@@ -455,127 +542,186 @@
                 <img src="3.png" alt="Cuadro del Torneo">
             </div>
         </section>
-
+    
         <section class="standings">
             <center><p>Jueves 27 de Febrero</p> </center>
             <div class="tournament-bracket">
                 <img src="4.png" alt="Cuadro del Torneo">
             </div>
         </section>
+    </div>
 
-        
-         <!-- Imagen de clasificaciones -->
+    <div id="GM">
         <section class="standings">
             <h2>Gráfica del Torneo Masculino</h2>
             <div class="tournament-bracket">
                 <img src="1.png" alt="Cuadro del Torneo">
             </div>
         </section>
-         <section class="standings">
+    </div>
+
+    <div id="GF">
+        <section class="standings">
             <h2>Gráfica del Torneo Femenino</h2>
             <div class="tournament-bracket">
                 <img src="1.png" alt="Cuadro del Torneo">
             </div>
         </section>
-
-        <div class="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item">
-                    <img src="5.png" alt="Imagen 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="primera.jpg" alt="Imagen 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="segunda.jpg" alt="Imagen 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="tercera.jpg" alt="Imagen 4">
-                </div>
-                <div class="carousel-item">
-                    <img src="cuarta.jpg" alt="Imagen 5">
-                </div>
-                <div class="carousel-item">
-                    <img src="Industrial.jpg" alt="Imagen 6">
-                </div>
-                <div class="carousel-item">
-                    <img src="quinta.jpg" alt="Imagen 7">
-                </div>
-                <div class="carousel-item">
-                    <img src="sexta.jpg" alt="Imagen 8">
-                </div>
-            </div>
-            <button class="carousel-control carousel-prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-control carousel-next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-
-
     </div>
+    
+      <!-- JavaScript -->
+   <script>
+  // Variables
 
-    <script>
-        // Script para manejar los carruseles
-document.querySelectorAll('.carousel').forEach((carouselElement) => {
-    const carouselInner = carouselElement.querySelector('.carousel-inner');
-    const items = carouselElement.querySelectorAll('.carousel-item');
-    const prevBtn = carouselElement.querySelector('.carousel-prev');
-    const nextBtn = carouselElement.querySelector('.carousel-next');
-
-    let currentIndex = 0;
-
-    function updateCarousel() {
-        carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
-        updateCarousel();
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % items.length;
-        updateCarousel();
-    });
-
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % items.length;
-        updateCarousel();
-    }, 5000);
-});
-
-        // Script del carrusel se mantiene igual
-        const carousel = document.querySelector('.carousel-inner');
-        const items = document.querySelectorAll('.carousel-item');
-        const prevBtn = document.querySelector('.carousel-prev');
-        const nextBtn = document.querySelector('.carousel-next');
-        
-        let currentIndex = 0;
-
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            updateCarousel();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel();
-        });
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % items.length;
-            updateCarousel();
-        }, 5000);
-    </script>
-    </div>
-
-    <p style="text-align: center; margin-top: 2rem;">&copy; Instituto Nacional Alejandro de Humboldt. Todos los derechos reservados.</p>
-</footer>
-</body>
+     const header = document.getElementById('header');
+              const navToggle = document.getElementById('navToggle');
+                    const navMenu = document.getElementById('navMenu');
+                    const backToTop = document.getElementById('backToTop');
+                    const galleryItems = document.querySelectorAll('.gallery-item');
+                    const modal = document.getElementById('galleryModal');
+                    const modalClose = document.getElementById('modalClose');
+                    const modalImage = document.getElementById('modalImage');
+                    const modalPrev = document.getElementById('modalPrev');
+                    const modalNext = document.getElementById('modalNext');
+                    const faqItems = document.querySelectorAll('.faq-item');
+                    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+                    const navDots = document.querySelectorAll('.nav-dot');
+                    
+                    let currentImageIndex = 0;
+            
+                    // Sticky Header
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 100) {
+                            header.classList.add('scrolled');
+                            backToTop.classList.add('visible');
+                        } else {
+                            header.classList.remove('scrolled');
+                            backToTop.classList.remove('visible');
+                        }
+                    });
+            
+                    // Mobile Navigation
+                    navToggle.addEventListener('click', () => {
+                        navMenu.classList.toggle('active');
+                    });
+            
+                    // Back to Top
+                    backToTop.addEventListener('click', () => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    });
+            
+                    // Gallery Modal
+                    galleryItems.forEach((item, index) => {
+                        item.addEventListener('click', () => {
+                            const imgSrc = item.querySelector('img').src;
+                            modalImage.src = imgSrc;
+                            currentImageIndex = index;
+                            modal.classList.add('active');
+                        });
+                    });
+            
+                    modalClose.addEventListener('click', () => {
+                        modal.classList.remove('active');
+                    });
+            
+                    modalPrev.addEventListener('click', () => {
+                        currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+                        modalImage.src = galleryItems[currentImageIndex].querySelector('img').src;
+                    });
+            
+                    modalNext.addEventListener('click', () => {
+                        currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+                        modalImage.src = galleryItems[currentImageIndex].querySelector('img').src;
+                    });
+            
+                    // Close modal when clicking outside
+                    window.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+            
+                    // FAQ Accordion
+                    faqItems.forEach(item => {
+                        const question = item.querySelector('.faq-question');
+                        question.addEventListener('click', () => {
+                            const isActive = item.classList.contains('active');
+                            
+                            // Close all items
+                            faqItems.forEach(faqItem => {
+                                faqItem.classList.remove('active');
+                            });
+                            
+                            // Open clicked item if it wasn't active
+                            if (!isActive) {
+                                item.classList.add('active');
+                            }
+                        });
+                    });
+            
+                    // Testimonial Slider
+                    navDots.forEach(dot => {
+                        dot.addEventListener('click', () => {
+                            const slideIndex = dot.getAttribute('data-slide');
+                            
+                            // Update active slide
+                            testimonialSlides.forEach(slide => {
+                                slide.style.transform = `translateX(-${slideIndex * 100}%)`;
+                            });
+                            
+                            // Update active dot
+                            navDots.forEach(d => d.classList.remove('active'));
+                            dot.classList.add('active');
+                        });
+                    });
+            
+                    // Smooth Scroll for Navigation Links
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            
+                            const target = document.querySelector(this.getAttribute('href'));
+                            
+                            if (target) {
+                                window.scrollTo({
+                                    top: target.offsetTop - 90,
+                                    behavior: 'smooth'
+                                });
+                                
+                                // Close mobile menu if open
+                                navMenu.classList.remove('active');
+                            }
+                        });
+                    });
+            
+                    // Form Submission
+                    const contactForm = document.getElementById('contactForm');
+                    if (contactForm) {
+                        contactForm.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            
+                            // Get form data
+                            const name = document.getElementById('name').value;
+                            const email = document.getElementById('email').value;
+                            const subject = document.getElementById('subject').value;
+                            const message = document.getElementById('message').value;
+                            
+                            // Here you would typically send the data to a server
+                            // For this example, we'll just log it and show an alert
+                            console.log('Form submitted:', { name, email, subject, message });
+                            
+                            // Show success message
+                            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+                            
+                            // Reset form
+                            contactForm.reset();
+                        });
+                    }
+                    
+                </script>
+        <footer><p style="text-align: center; margin-top: 2rem;">&copy; Instituto Nacional Alejandro de Humboldt. Todos los derechos reservados.</p></footer>  
+    </body>
 </html>
