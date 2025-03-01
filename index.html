@@ -9,12 +9,13 @@
     <style>
         :root {
             --primary-color: #009625;
-            --secondary-color: #3498db;
+            --secondary-color: #42db34;
             --accent-color: #e74c3c;
             --light-color: #ecf0f1;
             --dark-color: #000000;
             --text-color: #000000;
             --text-light: #f8f9fa;
+            --color-dark: #053821; /* Verde muy oscuro */
             --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -176,7 +177,7 @@
         }
 
         .btn:hover {
-            background: #2980b9;
+            background: #57b929;
             transform: translateY(-3px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
@@ -294,6 +295,95 @@
             margin-bottom: 15px;
         }
 
+        .menu-flotante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .menu-principal {
+            background-color: rgb(48, 197, 28);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .menu-principal:hover {
+            transform: scale(1.1);
+        }
+        
+        .menu-opciones {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .menu-opcion {
+            background-color: rgb(21, 114, 12);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+        
+        .menu-opcion:hover {
+            background-color: var(--color-dark);
+            transform: scale(1.1);
+        }
+        
+        .menu-flotante:hover .menu-opciones {
+            display: flex;
+        }
+        
+        .menu-opcion-texto {
+            position: absolute;
+            right: 60px;
+            background-color: var(--color-dark);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .menu-opcion:hover .menu-opcion-texto {
+            display: block;
+        }
+        
+        /* Iconos SVG para menú */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        /* Centrar elementos */
+        .centered-container {
+            display: flex;
+            justify-content: center;
+        }
+
        
         
         /* Responsive Design */
@@ -363,6 +453,20 @@
             display: block;
             border-radius: 10px;
         }
+         .menu-principal {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .menu-opcion {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .icon {
+                width: 20px;
+                height: 20px;
+            }
 
         @media (max-width: 576px) {
             .logo h1 {
@@ -499,17 +603,7 @@
                 <img src="logo_inah-removebg-preview.png" alt="Logo Institucional">
                 <h1>  Intramuros   INAH  2025 </h1>
             </div>
-            <button class="nav-toggle" id="navToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav>
-                <ul id="navMenu">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#Jornadas">Jornada - 1</a></li>
-                    <li><a href="#GM">Gráfica del Torneo Masculino</a></li>
-                    <li><a href="#GF">Gráfica del Torneo Femenina</a></li>
-                </ul>
-            </nav>
+            
         </div>
     </header>
 
@@ -525,22 +619,24 @@
         <div id="Jornadas">
         <div class="container">
         </section>
-        <section class="standings">
-            <h2>Partidos -  Jornada 1</h2>
-        </section>
+        
     
            
         <section class="standings">
-            <center><p>Miercoles 26 de Febrero</p> </center>
+            <center><p>Resultado - Jornada  1  Masculino</p> </center>
             <div class="tournament-bracket">
-                <img src="3.png" alt="Cuadro del Torneo">
+                <img src="5.png" alt="Cuadro del Torneo">
+                <br>
+                <center><a href="masculinoss.html" class="btn">Ver Resultados</a></center>
             </div>
         </section>
     
         <section class="standings">
-            <center><p>Jueves 27 de Febrero</p> </center>
+            <center><p>Resultado - Jornada 1 Femenino</p> </center>
             <div class="tournament-bracket">
-                <img src="4.png" alt="Cuadro del Torneo">
+                <img src="5.png" alt="Cuadro del Torneo">
+                <br>
+                <center><a href="Resultados y Tablas de Posiciones Intramuros 2025 Femenino.html" class="btn">Ver Resultados</a></center>
             </div>
         </section>
     </div>
@@ -565,13 +661,47 @@
             </div>
         </section>
     </div>
+    <div class="menu-flotante">
+        <div class="menu-principal">
+            <div class="menu-principal">
+                <img src="logo_inah-removebg-preview.png" alt="Logo" style="width: 40px; height: 40px;">
+            </div>
+            
+        </div>
+        <div class="menu-opciones">
+            <a href="index.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span class="menu-opcion-texto">Inicio</span>
+            </a>
+            <a href="partidos.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14v7l6 3.5-1 1.5-7-4V6h2z"/>
+                </svg>
+                <span class="menu-opcion-texto">Partidos</span>
+            </a>
+            <a href="masculinoss.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                </svg>
+                <span class="menu-opcion-texto">Resultados Masculinos</span>
+            </a>
+            <a href="Resultados y Tablas de Posiciones Intramuros 2025 Femenino.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                </svg>
+                <span class="menu-opcion-texto">Resultados Femeninos</span>
+            </a>
+        </div>
+    </div> 
     
       <!-- JavaScript -->
    <script>
   // Variables
 
      const header = document.getElementById('header');
-              const navToggle = document.getElementById('navToggle');
+                    const navToggle = document.getElementById('navToggle');
                     const navMenu = document.getElementById('navMenu');
                     const backToTop = document.getElementById('backToTop');
                     const galleryItems = document.querySelectorAll('.gallery-item');
@@ -583,8 +713,17 @@
                     const faqItems = document.querySelectorAll('.faq-item');
                     const testimonialSlides = document.querySelectorAll('.testimonial-slide');
                     const navDots = document.querySelectorAll('.nav-dot');
+                    const menuOpciones = document.querySelector('.menu-opciones');
                     
                     let currentImageIndex = 0;
+                    document.querySelector('.menu-principal').addEventListener('click', function() {
+           
+            if (menuOpciones.style.display === 'flex') {
+                menuOpciones.style.display = 'none';
+            } else {
+                menuOpciones.style.display = 'flex';
+            }
+        });
             
                     // Sticky Header
                     window.addEventListener('scroll', () => {
@@ -717,6 +856,8 @@
                             contactForm.reset();
                         });
                     }
+
+                    
                     
                 </script>
         <footer><p style="text-align: center; margin-top: 2rem;">&copy; Instituto Nacional Alejandro de Humboldt. Todos los derechos reservados.</p></footer>  
