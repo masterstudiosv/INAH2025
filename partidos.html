@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados y Tabla de Posiciones</title>
+    <link rel="icon" href="logo_inah-removebg-preview.png" type="image/png">
+    <style>
+        :root {
+            --color-primary: #0a5c36; /* Verde oscuro para fútbol */
+            --color-secondary: #1c8c4e; /* Verde medio */
+            --color-accent: #ffc107; /* Amarillo/dorado */
+            --color-light: #e9f7ef; /* Verde muy claro */
+            --color-dark: #053821; /* Verde muy oscuro */
+            --color-text: #333333;
+            --color-bg: #f5f9f7;
+            --color-button: #c40c0c; /* Rojo para botón */
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            padding: 10px 0;
+            font-size: 32px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: var(--color-button);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .back-button:hover {
+            background-color: #a70000;
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            margin-top: 40px;
+            color: var(--color-primary);
+            border-bottom: 3px solid var(--color-accent);
+            padding-bottom: 10px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        table, th, td {
+            border: none;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: var(--color-secondary);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--color-light);
+        }
+        
+        tr:hover {
+            background-color: #e8f4e5;
+        }
+        
+        /* Destacar equipos líderes */
+        tr:first-child td {
+            font-weight: bold;
+            color: var(--color-dark);
+        }
+        
+        footer {
+            background-color: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        
+        /* Badges para posiciones */
+        .position-1, .position-2, .position-3 {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 50%;
+            background-color: var(--color-accent);
+            color: var(--color-dark);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Menú flotante */
+        .menu-flotante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .menu-principal {
+            background-color: var(--color-primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .menu-principal:hover {
+            transform: scale(1.1);
+        }
+        
+        .menu-opciones {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .menu-opcion {
+            background-color: var(--color-secondary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+        
+        .menu-opcion:hover {
+            background-color: var(--color-dark);
+            transform: scale(1.1);
+        }
+        
+        .menu-flotante:hover .menu-opciones {
+            display: flex;
+        }
+        
+        .menu-opcion-texto {
+            position: absolute;
+            right: 60px;
+            background-color: var(--color-dark);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .menu-opcion:hover .menu-opcion-texto {
+            display: block;
+        }
+        
+        /* Iconos SVG para menú */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        /* Centrar elementos */
+        .centered-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Responsivo */
+        @media (max-width: 600px) {
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                white-space: nowrap;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: 20px;
+            }
+            
+            .menu-principal {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .menu-opcion {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .icon {
+                width: 20px;
+                height: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Intramuros de Fútbol Sala INAH 2025</h1>
+        </div>
+    </header>
+    <!-- Agregar después de los resultados de la jornada 1 y antes de las tablas de posiciones -->
+
+<!-- Próximos Partidos Jornada 2 -->
+<h2>Próximos Partidos - Jornada 2 -3 </h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Lunes 03 de Marzo de 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1:45 P.M. | 1-14 Torino vs 2-13 Code Wizards</td>
+            </tr>
+            <tr>
+                <td>2:30 P.M. | 2-12 los Galácticos vs 1-4 H&V F.C.</td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. | 2-5 Los Herederos vs 3-6 Industrial</td>
+            </tr>
+            <tr>
+                <td>4:00 P.M.  | 1-6 Los Espartanos vs 2-8 Red Devils </td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">4:45 P.M.. | 3-7 DS vs 2-1 Salud</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Martes 04 de marzo de 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:45 A.M.  | 3-4 Manyunited vs 1-7 La Choza</td>
+            </tr>
+            <tr>
+                <td>1:00 P.M. |	1-15 Las Mini Computadoras vs 2-9 Fenix </td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	3-5 Comercio vs 1-6 Resistencia</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">2:30 P.M. |	1-10 Manchester City vs 3-3 Descanso</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">3:15 P.M. |	3-7 DS vs 1-4 Fénix</td>
+            </tr>
+            <tr>
+                <td>4:10 P.M.	| 2-14 Los Santos vs 1-11 Liverpool</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. | 3-3 Los Galácticos Vs 2-10 Los Fénix</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Miércoles 05 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:00 A.M. |	1-10 Arsenal Vs 1-7 La Choza5</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">10:45 A.M. |	1-1 Y 2-2 Salud Vs 3-6 Industriales	</td>
+            </tr>
+            <tr>
+                <td >1:00 P.M. |	3-2 Toque Fino Vs 2-7 General	</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	3-4 Panteras Vs 3-1 Tormentas</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">2:30 P.M. |	1-4 Fénix Vs 3-3 Descanso</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">3:15 P.M. |	3-5 Comercio Vs 2-5 Real Furia</td>
+            </tr>
+            <tr>
+                <td>4:10 P.M. |	2-1 Y 2-2 Salud Vs 2-11 Reserva</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	2-7 General Vs 1-11 Liverpool 	</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Jueves 06 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:00 A.M. |	2-1 Y 2-2 Salud Vs 3-4 Vikingos</td>
+            </tr>
+            <tr>
+                <td>10:45 A.M. |	2-11 Reserva Vs 1-7 Vodka</td>
+            </tr>
+            <tr>
+                <td >1:00 P.M. |	3-6 Mechanics Vs 1-14 Torino</td>
+            </tr>
+            <tr>
+                <td>1:45 P.M. |	2-6 Young Boys Vs 2-4 Gladiadores</td>
+            </tr>
+            <tr>
+                <td>2:30 P.M. |	3-8 Tanque Fronterizo Vs 1-9 F.C.</td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. | 	2-11 Porto Vs 3-5 Comercio</td>
+            </tr>
+            <tr>
+                <td>4:10 P.M. |	2-1 Y 2-2 Salud Vs 2-11 Reserva</td>
+            </tr>
+            <tr>
+                <td>4:00 P.M. |	2-10 Alliance Vs 1-8 General</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	1-2 Nacional Vs 1-11 Liverpool</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Viernes 07 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1:00 P.M. |	1-1 Salud Vs 2-1 Y 2-2 Salud</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	2-1 Salud Vs 1-4 Fénix</td>
+            </tr>
+            <tr>
+                <td >2:30 P.M. |	2-4 Los Santos Vs 1-12 Bayer Leverkusen </td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. |	3-7 Software Vs 1-13 Hidráulicos </td>
+            </tr>
+            <tr>
+                <td>4:00 P.M. |	2-11 Reserva Vs 3-4 Vikingos</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	3-3 Milán Vs 1-13 Ingenieros </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Lunes 10 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1:45 P.M. |	2-13 Code Wizards Vs 2-12 La Tribu</td>
+            </tr>
+            <tr>
+                <td >	2:30 P.M. |	3-2 Toque Fino Vs 1-2 Nacional </td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. |	2-5 Los Herederos Vs 1-6 Los Espartanos</td>
+            </tr>
+            <tr>
+                <td>4:00 P.M. |	3-6 Industrial Vs 2-8 Red Devils</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">4:45 P.M. |	2-1 Salud Vs 3-3 Descanso</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Martes 11 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:45 A.M. |	1-15 Las Mini Computadoras Vs 3-3 Los Galácticos </td>
+            </tr>
+            <tr>
+                <td >1:00 P.M. |	2-14 Los Santos Vs 1-2 Nacional </td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	3-2 Warriors Vs 1-6 Resistencia</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">2:30 P.M. |	3-7 DS Vs 1-10 Manchester City</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">3:15 P.M. |	1-11 Azul Vs 2-5 Real Furia</td>
+            </tr>
+            <tr>
+                <td>4:10 P.M. |	1-5 Novatos Vs 2-12 Los Zukas </td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	1-4 H&V F.C. Vs 1-7 La Choza</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Miercoles 12 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:00 A.M. | 	1-1 Salud Vs 1-7 Vodka </td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">10:45 A.M. |	1-1 Y 2-2 Salud Vs 3-4 Panteras</td>
+            </tr>
+            <tr>
+                <td >1:00 P.M. |	3-4 Vikingos Vs 1-7 Vodka</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	3-6 Industriales Vs 3-1 Tormentas</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">2:30 P.M. |	3-2 Warriors Vs 2-5 Real Furia</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">3:15 P.M. |	1-6 Resistencia Vs 1-11 Azul</td>
+            </tr>
+            <tr>
+                <td>4:10 P.M. |	3-4 Manyunited Vs 2-12 Los Galácticos</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	1-13 Ingenieros Vs 2-12 Los Zukas </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Jueves 13 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10:00 A.M.  |	2-12 Los Galácticos Vs 1-10 Arsenal</td>
+            </tr>
+            <tr>
+                <td>10:45 A.M. | 	2-10 Alliance Vs 3-5 Comercio</td>
+            </tr>
+            <tr>
+                <td>1:00 P.M. |	2-11 Porto Vs 1-8 General</td>
+            </tr>
+            <tr>
+                <td>1:45 P.M. |	2-6 Young Boys Vs 3-8 Tanque Fronterizo</td>
+            </tr>
+            <tr>
+                <td>2:30 P.M. |	2-4 Gladiadores Vs 1-9 F.C. </td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. | 	3-6 Mechanics Vs 2-12 La Tribu</td>
+            </tr>
+            <tr>
+                <td>4:00 P.M. |	2-14 Los Santos Vs 1-13 Hidráulicos </td>
+            </tr>
+            <tr>
+                <td>4:45 P.M. |	3-7 Software Vs 1-12 Bayer Leverkusen </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Viernes 14 De Marzo De 2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:00 P.M. |	3-2 Warriors Vs 1-11 Azul</td>
+            </tr>
+            <tr>
+                <td style="background-color: rgb(255, 0, 157);">1:45 P.M. |	2-1 Salud Vs 1-10 Manchester City</td>
+            </tr>
+            <tr>
+                <td>2:30 P.M. |	3-3 Milán Vs 1-5 Novatos </td>
+            </tr>
+            <tr>
+                <td>3:15 P.M. |	2-7 General Vs 2-14 Los Santos</td>
+            </tr>
+            <tr>
+                <td>4:00 P.M.	1-1 Salud Vs 2-11 Reserva</td>
+            </tr>
+            <tr>
+                <td>4:45 P.M.	1-10 Arsenal Vs 1-4 H&V F.C.</td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+
+
+    <!-- Menú flotante -->
+    <div class="menu-flotante">
+        <div class="menu-principal">
+            <div class="menu-principal">
+                <img src="logo_inah-removebg-preview.png" alt="Logo" style="width: 40px; height: 40px;">
+            </div>
+            
+        </div>
+        <div class="menu-opciones">
+            <a href="index.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span class="menu-opcion-texto">Inicio</span>
+            </a>
+            <a href="partidos.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14v7l6 3.5-1 1.5-7-4V6h2z"/>
+                </svg>
+                <span class="menu-opcion-texto">Partidos</span>
+            </a>
+            <a href="masculinoss.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                </svg>
+                <span class="menu-opcion-texto">Resultados Masculinos</span>
+            </a>
+            <a href="Resultados y Tablas de Posiciones Intramuros 2025 Femenino.html" class="menu-opcion">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                </svg>
+                <span class="menu-opcion-texto">Resultados Femeninos</span>
+            </a>
+        </div>
+    </div> 
+    
+    
+    
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Instituto Nacional Alejandro de Humboldt | Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para mostrar/ocultar menú en dispositivos táctiles
+        document.querySelector('.menu-principal').addEventListener('click', function() {
+            const menuOpciones = document.querySelector('.menu-opciones');
+            if (menuOpciones.style.display === 'flex') {
+                menuOpciones.style.display = 'none';
+            } else {
+                menuOpciones.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
